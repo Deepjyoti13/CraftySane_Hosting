@@ -1,0 +1,10 @@
+{% extends 'user/base.html' %}
+{% block title %}
+Link Invalid
+{% endblock %}
+{% block body %}
+<div class="container my-1">
+    <h2 class="my-3 mx-3"><b>Invalid token!</b></h2>
+    <h3 class="my-3 mx-3">If you face any difficulty feel free to <a href="{% url 'contact' %}">contact</a> us.</h3>
+</div>
+{% endblock %}

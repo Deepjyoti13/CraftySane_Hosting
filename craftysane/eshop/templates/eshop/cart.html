@@ -1,0 +1,116 @@
+{% extends 'eshop/base.html' %}
+{% load static %}
+{% block title %}
+Cart
+{% endblock %}
+{% block body %}
+<br>
+{% if shopcart %}
+    <div class="container text-center">
+        <h6 class="bg-success px-auto mx-auto w-75 rounded py-2 text-white">Delivering to:
+            <strong>{{ request.user.username }}</strong></h6>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 text-center">
+                <a class="px-3 py-1 rounded disabled"
+                    style="border: solid 2px rgb(0, 0, 0);color: rgb(255, 255, 255);background: rgb(0, 0, 0);"
+                    class="">Cart</a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="{% url 'payu_demo' %}" class="px-3 py-1 rounded disabled" style="border: solid 2px black" class="">Address</a>
+            </div>
+            <div class="col-4 text-center">
+                <a class="px-2 py-1 rounded mx-auto disabled" style="border: solid 2px black" class="">Payment</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <h4 style="font-weight: 600;">Price details</h4>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-6 m-0 p-0">Total MRP</div>
+                <div class="col-6 text-right">Rs. {{ total }}</div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-6 m-0 p-0">Discount %</div>
+                <div class="col-6 text-right">50%</div>
+            </div> -->
+            <div class="row">
+                <div class="col-6 m-0 p-0">Shipping</div>
+                <div class="col-6 text-right">Rs. 50</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6 m-0 p-0"><strong>Total</strong></div>
+                <div class="col-6 text-right"><strong>Rs. 1125</strong></div>
+            </div>
+            <br>
+            <div class="row">
+                <a href="{% url 'payu_demo' %}" class="bg-dark text-white border p-3">Add Address</a>
+                <a href="{% url 'cod' %}" class="bg-dark text-white border p-3 mx-5">Cash on delivery</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <h2 style="font-weight: 600;">Cart</h2>
+    </div>
+{% endif %}
+<!--Loop start here-->
+{% if shopcart %}
+{% for item in shopcart %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6  py-2 mx-2 rounded" style="background: #00000011;">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/product/{{ item.product.id }}/{{ item.product.slug }}"><img class="w-100 mb-2"
+                        {% if item.variant.image_id  > 0 %} src="{{ item.variant.image }}" {% else %} src="{{ item.product.image.url }}" {% endif %} alt=""></a>
+                    <div class="row p-0 m-0">
+                        <a href="/order/deletefromcart/{{ item.id }}" onclick="return confirm('Delete! Are you sure?')"
+                            class="w-100 mt-2 border text-white rounded small py-1 text-center"
+                            style="background: green;">REMOVE</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p class="my-0 py-0"><strong>{{ item.product.brand_name }}</strong></p>
+                    <p class="my-0 py-0 mb-2">{{ item.product.title }}</p>
+                    {% if item.variant != 'None' %}
+                    <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">{{ item.variant.title }}</a>
+                    {% endif %}
+                    <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">Qty: {{ item.quantity }}</a>
+                    <br>
+                    <br>
+                    {% if item.product.variant == 'None' %}
+                    <a class="text-dark disabled" href="">Rs. {{ item.product.price }}</a>
+                    {% else %}
+                    <a class="text-dark disabled" href="">Rs. {{ item.variant.price }}</a>
+                    {% endif %}
+                    <a class="text-dark disabled" href=""><strike>{{ item.product.prevprice }}</strike></a>
+                    <a class="text-danger disabled" href="">{{ item.product.offer }}% off</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+    <br>
+
+</div>
+{% endfor %}
+{% else %}
+<div class="container">
+    <h2 style="font-weight: 600;">Cart</h2>
+</div>
+<div class="container text-center">
+    <span>You don't have anything in your cart!</span>
+</div>
+{% endif %}
+<!--Loop end here-->
+
+<br>
+{% endblock %}

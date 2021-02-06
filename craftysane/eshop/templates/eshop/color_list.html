@@ -1,0 +1,10 @@
+<input type="hidden" name="size" id="size" value="{{ size_id }}">
+<p class="m-1"><strong>Color</strong></p>
+{% for rs in colors %}
+<p class="my-0 py-0">
+    <input type="radio" name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+    <span class="text-black">
+        {{ rs.color }}
+    </span>
+</p>
+{% endfor %}

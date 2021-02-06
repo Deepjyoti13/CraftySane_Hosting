@@ -1,0 +1,91 @@
+{% extends 'eshop/base.html' %}
+{% load static %}
+{% block title %}
+Wish List
+{% endblock %}
+{% block body %}
+{% if shopcart %}
+<div class="container">
+    <div class="col-md-6 mx-auto">
+        <h2 style="font-weight: 600">Wishlist</h2><br>
+        <!--Loop start here-->
+        {% for item in shopcart %}
+        <div class="p-2" style="border-radius: 15px; background: #efffef">
+            <div class="row m-0 p-0">
+                <div class="col-4 m-0 p-0">
+                    <img class="w-100 m-0 p-0" style="border-radius: 15px"
+                        src="{{ item.product.image.url }}"
+                        alt="" />
+                </div>
+                <div class="col-8">
+                    <p class="small m-0 p-0" style="color: #04cc00">
+                        <strong>{{ item.product.brand_name }}</strong>
+                    </p>
+                    <p class="p-0 m-0 small"><strong>{{ item.product.title }}</strong></p>
+                    <p class="p-0 pb-2 m-0 small">
+                        <strong><i class="text-primary fas fa-rupee-sign"></i> {{ item.product.price }}</strong>
+                    </p>
+                    <a href="{% url 'deletefromlist' item.id %}" onclick="return confirm('Delete! Are you sure?')" class="px-3 py-1 small" style="
+                border-radius: 10px;
+                border: solid 2px rgb(255, 0, 0);
+                color: red;
+              ">REMOVE</a> <br> <br>
+                </div>
+            </div>
+        </div>
+        <br />
+        {% endfor %}
+        <!--Loop end here-->
+    </div>
+</div>
+
+<!--Loop start here-->
+
+{% else %}
+<div class="container">
+    <h2 style="font-weight: 600;">List</h2>
+</div>
+<div class="container">
+    <span>You don't have anything in your list!</span>
+</div>
+{% endif %}
+<!--Loop end here-->
+
+<br>
+{% endblock %}
+
+
+<!-- {% if shopcart %}
+{% for item in shopcart %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6  py-2 mx-2 rounded" style="background: #00000011;">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/product/{{ item.product.id }}/{{ item.product.slug }}"><img class="w-100 mb-2"
+                            src="{{ item.product.image.url }}" alt=""></a>
+                    <div class="row p-0 m-0">
+                        <a href="/order/deletefromlist/{{ item.id }}" onclick="return confirm('Delete! Are you sure?')"
+                            class="w-100 mt-2 border text-white rounded small py-1 text-center"
+                            style="background: green;">REMOVE</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p class="my-0 py-0"><strong>{{ item.product.brand_name }}</strong></p>
+                    <p class="my-0 py-0 mb-2">{{ item.product.title }}</p>
+                    <a class="bg-dark mr-2 px-2 py-1 text-white rounded" href="">Size: L</a>
+                    <br>
+                    <br>
+                    <a class="text-dark disabled" href="">Rs. {{ item.product.price }}</a>
+                    <a class="text-dark disabled" href=""><strike>{{ item.product.prevprice }}</strike></a>
+                    <a class="text-danger disabled" href="">{{ item.product.offer }}% off</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+    <br>
+
+</div>
+{% endfor %} 
+{% endif %}-->

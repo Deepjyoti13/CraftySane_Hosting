@@ -1,0 +1,179 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+Home
+{% endblock %}
+{% block body %}
+<div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            {% for i in range %}
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for item in product_slider %}
+            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                <a href="{% url 'category_offer' item.id item.slug %}">
+                    <img class="d-block w-100" src="{{ item.featimage.url }}" alt="First slide">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<br>
+
+<div class="container my-3 text-center">
+    <div class="row mx-auto">
+        {% for item in category %}
+        {% if item.is_root_node %}
+        {% if item.status != 'False' %}
+        <div class="col-2 mx-auto p-0">
+            <a href="{% url 'category_product' item.id item.slug %}">
+                <img class="w-100" src="{{ item.image.url }}" alt="" />
+            </a>
+        </div>
+        {% else %}
+        <div class="col-2 mx-auto p-0">
+            <a style="pointer-events: none; cursor: default;">
+                <img class="w-100" src="{{ item.image.url }}" alt="">
+            </a>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<br id="peep2">
+
+<!--deal of the day start-->
+{% for item in deal %}
+<div class="col-md-8 mx-auto">
+    <a href="{% url 'deals' item.dealSlug %}">
+        <img id="{{ item.onlyChar2 }}" class="w-100" src="{{ item.image.url }}" alt=""></a>
+    <style>
+        #{{ item.onlyChar1 }}
+        {
+          text-align: center;
+          font-size: 16px;
+          margin-top: 0px;
+          border-radius: 15px;
+          border: solid 3px black;
+        }
+    </style>
+    <p class="mt-2" id="{{ item.onlyChar1 }}"></p>
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date('{{ item.end|date:"M d, Y" }} {{ item.end|time:"H:i:s" }}').getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="{{ item.onlyChar1 }}"
+            document.getElementById("{{ item.onlyChar1 }}").innerHTML = 
+            {% if item.deal == 'Deal of the month' or item.deal == 'Deal of the week' %}
+            "<strong>" + days +
+                "</strong> <small classname={}>days</small> <strong>" + hours +
+                "</strong> <small>hours</small> <strong>" +
+                minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                "</strong> <small>seconds</small> left! Hurry"; 
+                {% endif %}
+            "<strong>" + hours +
+                "</strong> <small>hours</small> <strong>" +
+                minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                "</strong> <small>seconds</small> left! Hurry";
+
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("{{ item.onlyChar1 }}").style.display = "none";
+                document.getElementById("{{ item.onlyChar2 }}").style.display = "none";
+            }
+        }, 0);
+    </script>
+</div>
+{% endfor %}
+<!--deal of the day end-->
+
+<br />
+<div class="container">
+  <div class="text-left">
+    <br />
+    <p class="p-0 m-0 ml-2"><strong>TOP PICKS FOR YOU</strong></p>
+    <br />
+  </div>
+  <div class="row mx-1 text-left">
+    <!--loop starts here-->
+    {% for item in product_trending %}
+    <div class="col-4 p-1">
+      <a href="/product/{{ item.id }}/{{ item.slug }}">
+        <div
+          style="
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgb(116, 18, 18);
+            margin: 3px;
+            border-radius: 100%;
+            color: white;
+          ">
+          <p
+            class="small"
+            style="
+              margin: 7px;
+              width: 100%;
+              margin-top: 10px;
+              font-weight: 600;
+            "
+          >
+          {{ item.offer|floatformat }} %
+          </p>
+        </div>
+        <div
+          class="text-dark p-1 m-0"
+          style="background: rgb(252, 252, 252)"
+        >
+          <img class="w-100" src="{{ item.image.url }}" alt="" />
+          <p class="text-danger p-0 m-0" style="font-size: 80%">
+            <strong>{{ item.brand_name }}</strong>
+          </p>
+          <p class="p-0 m-0" style="font-size: 60%">
+            <strong>{{ item.title|truncatechars:20 }}</strong>
+          </p>
+          <p style="font-size: 60%; margin-bottom: 0">
+            <span style="font-weight: 600; color: rgb(116, 18, 18)"
+              ><i class="fas fa-rupee-sign    "></i> {{ item.price }}</span
+            >
+            <strike><i class="fas fa-rupee-sign    "></i> {{ item.prevprice }}</strike>
+          </p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+    <!--loop ends here-->
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+{{ deal.deal }}
+{% endblock %} %}
+{% load static %}
+{% block body %}
+<div class="container text-left my-1">
+	<a style="border-radius: 5px;font-weight: 400;" class="text-dark  px-3 py-1 small disabled" href="">
+		<h3><b><strong>{{ deal.deal }}</strong></b></h3>
+		<p>{{ len }} Product{% if len > 1 %}s{% endif %}</p>
+	</a>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="row">
+				{% for rs in products %}
+				<div class="col-6 mx-0 px-1 ">
+					<a href="{% url 'product_detail' rs.id rs.slug %}">
+						<div class="w-100 rounded">
+							<img class="w-100 rounded" id="listimg"
+								src="{{ rs.image.url }}"
+								alt="">
+							<div class="px-2 pt-2 ">
+								<div>
+									<h6 class="my-0 py-0 text-success"><Strong>{{ rs.brand_name }}</Strong></h6>
+									<p class="w-100 text-dark small mb-0 pb-0">{{ rs.title }}</p>
+									<a class="small disabled text-dark h4 mr-1 mt-0 pt-0" href=""
+										style="font-weight: 700;"><i class="fas fa-rupee-sign    "></i> {{ rs.price }}</a>
+									<a class="small disabled text-dark mt-0 pt-0" href=""><strike><i class="fas fa-rupee-sign    "></i> {{ rs.prevprice }}</strike></a>
+								</div>
+								{% if rs.variant == 'None' %}
+								<a href="{% url 'addtoshopcart' rs.id %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
+									style="border: none">Cart</a>
+								{% else %}
+								<a href="{% url 'product_detail' rs.id rs.slug %}" class="my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded"
+									style="border: none">View</a>	
+								{% endif %}
+								<a href="{% url 'addtowishlist' rs.id %}" class="my-2 rounded-circle ml-1"
+									style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
+										class="far fa-heart text-white"></i></a>
+							</div>
+						</div>
+					</a>
+					<br>
+				</div>
+				{% endfor %}
+				<!--Loop ends here-->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

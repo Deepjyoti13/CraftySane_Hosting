@@ -1,0 +1,54 @@
+{% extends 'eshop/base.html' %}
+{% load static %}
+{% block body %}
+<div class="container text-center">
+    <h6 class="bg-success px-auto mx-auto w-75 rounded py-2 text-white">Delivering to: <strong>{{ request.user.username }}</strong></h6>
+  </div>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-4 text-center">
+        <a class="px-3 py-1 rounded disabled" style="border: solid 2px rgb(0, 0, 0);color: rgb(0, 0, 0);background: rgba(0, 255, 0, 0.144);" class="">cart</a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="px-3 py-1 rounded disabled" style="border: solid 2px rgb(0, 0, 0);color: rgb(0, 0, 0);background: rgba(0, 255, 0, 0.144);" class="">address</a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="px-2 py-1 rounded mx-auto disabled" style="border: solid 2px black" class="">Payment</a>
+      </div>
+    </div>
+  </div>
+  <br><br>
+<div class="container">
+    <div class="col-md-6 mx-auto">
+        <h4 style="font-weight: 600;">Your address</h4>
+        <div class="row">
+          <form method="POST" action=""> {% csrf_token %}
+              <!-- <label for="first_name">First Name:</label> -->
+              <input id="first_name" required name="first_name" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="First Name">
+              <!-- <label for="last_name">Last Name:</label> -->
+              <input id="last_name" required name="last_name" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Last Name">
+              <!-- <label for="phone">Phone:</label> -->
+              <input id="phone" required name="phone" class=" w-100 px-2 mx-0 my-1" type="tel" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Phone Number (+91)">
+              <!-- <label for="address">Address Line:</label> -->
+              <input id="address" required name="address" class=" w-100 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 100px;border-radius: 10px;" placeholder="Address Line">
+              <!-- <label for="ZIP">ZIP:</label> -->
+              <input id="ZIP" required name="ZIP" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="PIN Code">
+              <!-- <label for="city">City:</label> -->
+              <input id="city" required name="city" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="City">
+              <!-- <label for="state">State:</label> -->
+              <input id="state" required name="state" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="State">
+              <!-- <label for="country">Country:</label> -->
+              <input id="country" required name="country" class=" w-20 px-2 mx-0 my-1" type="text" style="background-color: rgba(0, 128, 0, 0.13);border: none;height: 40px;border-radius: 10px;" placeholder="Country">
+              <br>
+              Total payable amount <i class="fas fa-rupee-sign    "></i> {{ total }}
+              <br>
+              <input class="bg-dark border py-2 px-3 mx-0 my-1 text-white rounded" value="Proceed >>" type="submit" placeholder="">
+          </form>
+      </div>
+
+       <br>
+       
+    </div>
+</div>
+{% endblock %}

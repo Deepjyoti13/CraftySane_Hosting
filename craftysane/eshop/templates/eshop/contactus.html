@@ -1,0 +1,73 @@
+{% extends 'eshop/base.html' %}
+{% load i18n %}
+{% block title %} Contact Us {% endblock %}
+
+{% block body %}
+<br>
+<br>
+<!-- BREADCRUMB -->
+<!-- <div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li class="active">{% trans "Contact Page" %}</li>
+        </ul>
+    </div>
+</div> -->
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="billing-details">
+
+                    <div class="section-title">
+                        <h3><strong>Contact Us</strong><hr></h3><br>
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message.tags}}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <form id="checkout-form" class="clearfix" method="post">
+                        {% csrf_token %}
+                        {% for item in form %}
+                        {{ item }}
+                        {% endfor %}
+                        <input class="bg-dark border py-2 px-3 mx-0 my-1 text-white rounded" name="" type="submit" value="{% trans "Send >>" %}">
+                    </form>
+                </div>
+<br><br>
+            </div>
+            {% if setting.contact %}
+            <div class="col-md-6">
+                <div class="shiping-methods">
+                    <div class="section-title">
+                        <h3 class="title text-right"><strong>{% trans "Contact Information"%}</strong><hr class="ml-5"></h3> <br>
+                    </div>
+                    <div class="text-right">
+                        {{ setting.contact|safe }}
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+<br><br>
+{% endblock %}

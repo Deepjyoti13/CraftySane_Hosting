@@ -1,0 +1,45 @@
+{% extends 'eshop/base.html' %}
+
+{% block title %} Order List {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <h2 style="font-weight: 600">My orders</h2>
+    <br />
+    <div class="col-md-6 p-0">
+        <!--Loop start here-->
+        {% for rs in orders %}
+        <div class="p-3" style="
+          background: #efffef;
+          border-radius: 20px;
+          border-right: solid 10px #05ff00;
+        ">
+            <p class="small p-0 m-0">Order ID : {{ rs.code }}</p>
+            <p class="small p-0 m-0">
+                <strong>Total :
+                    <span style="color: #04cc00"><i class="fas fa-rupee-sign"></i> {{ rs.total }}</span>
+                </strong>
+            </p>
+            <p class="small p-0 m-0">
+                <strong>Date of Order : {{ rs.create_at }} </strong>
+            </p>
+            <p class="small p-0 m-0 mb-1">
+                <strong>Status : <span class="text-primary">{{ rs.status }}</span>
+                </strong>
+            </p>
+            <p class="small p-0 m-0 mb-1">
+                <strong>Payment Method : <span class="text-primary">{{ rs.mode }}</span>
+                </strong>
+            </p>
+
+            <a href="/user/orderdetail/{{ rs.id }}" class="bg-dark px-3 py-1 text-white small" style="border-radius: 10px">See Details</a>
+        </div>
+        <br />
+        {% endfor %}
+        <!--Loop end here-->
+        <br />
+    </div>
+</div>
+{% endblock %}

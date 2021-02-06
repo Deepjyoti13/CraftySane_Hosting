@@ -1,0 +1,10 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+Email Confirmed
+{% endblock %}
+{% block body %}
+<div class="container my-1">
+<h2 class="my-3 mx-3"><b>Registration complete!</b></h2>
+<h3 class="my-3 mx-3">Thank you for your email confirmation. Now you can <a href="{% url 'login_form' %}">login</a> your account.</h3>
+</div>
+{% endblock %}e

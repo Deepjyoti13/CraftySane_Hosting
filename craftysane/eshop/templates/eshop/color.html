@@ -1,0 +1,12 @@
+<p class="m-1"><strong>Color</strong></p>
+<div class="select col-md-5" style="border: solid 1px #00661a;">
+    <form method="post" action="?q=selectvariant" id="post-color"> {% csrf_token %}
+        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+        <select name="color" id="color">
+            {% for rs in colors %}
+            <option {% if variant.id == rs.id %} selected {% endif %} value="{{ rs.size_id }}">
+                {{ rs.color }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</div>

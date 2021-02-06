@@ -1,0 +1,39 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+404 Error!
+{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="col-md-6 text-center mx-auto" style="border-radius: 25px; background: rgb(0, 212, 0)">
+        <br />
+        <h1 class="p-0 m-0 display-3" style="font-weight: 700; color: white">
+            Error 404
+        </h1>
+        <p class="text-white">Page not found!</p>
+        <br />
+    </div>
+    <br />
+    <div class="col-md-6 text-center mx-auto">
+        <h1 class="p-0 m-0 display-4" style="font-weight: 700; color: rgb(0, 132, 255); font-style: italic">
+            OOPs
+        </h1>
+        <div class="w-50 mx-auto" style="height: 2px; background: rgb(0, 132, 255)"></div>
+        <br />
+        <p class="text-primary">
+            The link you clicked may be broken or the page may have been removed
+            or renamed.
+        </p>
+        <br />
+        <a href="/" class="bg-primary text-white p-2 rounded-pill px-3">Keep shopping</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

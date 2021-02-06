@@ -1,0 +1,246 @@
+{% extends 'eshop/base.html' %}
+
+{% block title %} Order Detail {% endblock %}
+{% block body %}
+
+<!-- BREADCRUMB -->
+<!-- <div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Order Detail</li>
+        </ul>
+    </div>
+</div> -->
+<!-- /BREADCRUMB -->
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-9">
+                <div class="order-summary clearfix">
+                    <div class="section-title">
+                        <h3 class="title">Order Detail</h3>
+                    </div>
+                    <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Full Name</th>
+                            <td class="text-left">{{ order.first_name}} {{ order.last_name }} </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Phone</th>
+                            <td class="text-left">{{ order.phone}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Address</th>
+                            <td class="text-left">{{ order.address}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">City</th>
+                            <td class="text-left">{{ order.city}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">ZIP</th>
+                            <td class="text-left">{{ order.ZIP}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Country</th>
+                            <td class="text-left">{{ order.country}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Status</th>
+                            <td class="text-left">{{ order.status}}</td>
+                        </tr>
+
+                        <tr>
+                            <th class="text-left">Order Date</th>
+                            <td class="text-left">{{ order.create_at }}</td>
+                        </tr>
+
+
+                        <tr>
+                            <th class="text-left">Payment Method</th>
+                            <td class="text-left">{{ order.mode }}</td>
+                        </tr>
+
+
+                        {% if order.status == 'On Shipping' %}
+                        <tr>
+                            <th class="text-left">Shipping Info</th>
+                            <td class="text-left">⏭<span id="YQElem1" class="btn-sm btn-primary"
+                                    style="cursor: pointer;">
+                                    {{ order.tracking }}</span></td>
+                        </tr>
+                        {% endif %}
+                        {% if order.adminnote %}
+                        <tr>
+                            <th class="text-left">From Us</th>
+                            <td class="text-left">
+                                {{ order.adminnote }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if order.status == 'Delivered' %}
+                        <tr>
+                            <th class="text-left">Delivery Date</th>
+                            <td class="text-left">
+                                {{ order.delivery_date }}</td>
+                        </tr>
+                        {% endif %}
+
+                    </table>
+                    {% if order.status != 'Delivered' %}
+                    {% if order.status != "Canceled" and order.status != 'Return Requested' and order.status != 'Returned' %}
+                    <a href="{% url 'cancelorder' order.id %}" class="btn btn-sm btn-danger">Cancel your order</a>
+                    {% endif %}
+                    {% else %}
+                    <a id="demo" href="{% url 'returnorder' order.id %}" class="btn btn-sm btn-danger">Return</a>
+                    <p class="mt-2 mx-3" id="para"></p>
+
+                    {% endif %}
+
+                    <script>
+                        // Set the date we're counting down to
+                        var countDownDate = new Date(
+                            '{{ order.return_before_date|date:"M d, Y" }} {{ order.return_before_date|time:"H:i:s" }}'
+                        ).getTime();
+
+                        // Update the count down every 1 second
+                        var x = setInterval(function () {
+
+                            // Get today's date and time
+                            var now = new Date().getTime();
+
+                            // Find the distance between now and the count down date
+                            var distance = countDownDate - now;
+
+                            // Time calculations for days, hours, minutes and seconds
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            // Output the result in an element with id="para"
+                            document.getElementById("para").innerHTML =
+                                "<span>No return request after</span> <strong>" + days +
+                                "</strong> <small classname={}>days</small> <strong>" + hours +
+                                "</strong> <small>hours</small> <strong>" +
+                                minutes + "</strong> <small>minutes</small> <strong>" + seconds +
+                                "</strong> <small>seconds</small>";
+                            // If the count down is over, write some text 
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("para").style.display = "none";
+                                document.getElementById("demo").style.display = "none";
+                            }
+                        }, 0);
+                    </script>
+
+
+                    <br>
+                    <hr><br>
+
+                    <div class="container m-0 p-0">
+                        <h2 style="font-weight: 600">Ordered Items</h2>
+                        <!--Loop start here-->
+                        {% for item in orderitems %}
+                        <div class="p-2" style="border-radius: 15px; background: #efffef">
+                            <div class="row m-0 p-0">
+                                <div class="col-4 m-0 p-0"> <a
+                                        href="/product/{{ item.product.id }}/{{ item.product.slug }}">
+                                        <img class="w-100 m-0 p-0" style="border-radius: 15px"
+                                            {% if item.variant.image_id  > 0 %} src="{{ item.variant.image }}"
+                                            {% else %} src="{{ item.product.image.url }}" {% endif %} alt="" /> </a>
+                                </div>
+                                <div class="col-8">
+                                    <p class="m-0 p-0" style="color: #04cc00">
+                                        <strong>{{ item.product.brand_name }}</strong>
+                                    </p>
+                                    <p class="p-0 m-0"><strong>{{ item.product.title }}</strong></p>
+                                    {% if item.variant != 'None' %}
+                                    <p class="p-0 pb-2 m-0">{{ item.variant.title }}</p>
+                                    {% endif %}
+                                    <p class="p-0 pb-2 m-0">
+                                        <i class="m-0 p-0 text-primary fas fa-rupee-sign"> </i>
+                                        {% if item.product.variant == 'None' %}{{ item.price }}{% else %}{{ item.variant.price }}{% endif %}
+                                    </p>
+                                    <p class="p-0 pb-2 m-0"><strong class="text-primary">Qty:
+                                        </strong>{{ item.quantity }}</p>
+                                    <p class="p-0 pb-2 m-0"><strong class="text-primary">Ordered at:
+                                        </strong>{{ item.create_at }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        {% endfor %}
+                        <!--Loop end here-->
+
+                    </div>
+                    <br><br>
+
+<!-- 
+                    <div class="section-title">
+                        <h4 class="title">Order Item List</h4>
+                    </div>
+
+                    <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Id </th>
+                            <th class="text-left">Product Name </th>
+                            <th class="text-left">Price </th>
+                            <th class="text-left">Qauatity </th>
+                            <th class="text-left">Amount </th>
+                            <th class="text-left">Status </th>
+                            <th class="text-left">Date </th>
+                        </tr>
+                        {% for rs in orderitems %}
+                        <tr>
+                            <td class="text-left">
+                                <a href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">
+                                    <img src="{{rs.product.image.url}}" alt="" style="height: 50px">
+                                </a>
+                            </td>
+                            <td class="text-left">{{ rs.product.title }}</td>
+                            <td class="text-left"><i class="fas fa-rupee-sign    "></i>{{ rs.price }} </td>
+                            <td class="text-left">{{ rs.quantity }} </td>
+                            <td class="text-left">{{ rs.amount }} </td>
+                            <td class="text-left">{{ rs.status }} </td>
+                            <td class="text-left">{{ rs.create_at }} </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+ -->
+
+<!--Script code can be put in the bottom of the page, wait until the page is loaded then execute.-->
+<script type="text/javascript" src="//www.17track.net/externalcall.js"></script>
+<script type="text/javascript">
+    YQV5.trackSingleF1({
+        //Required, Specify the element ID of the floating position.
+        YQ_ElementId: "YQElem1",
+        //Optional, specify the tracking result width, min width 260px, default is 470px.
+        YQ_Width: 470,
+        //Optional, specify tracking result height, max height 800px, default is 560px.
+        YQ_Height: 560,
+        //Optional, select carrier, default to auto identify.
+        YQ_Fc: "0",
+        //Optional, specify UI language, default language is automatically detected based on the browser settings.
+        YQ_Lang: "en",
+        //Required, specify the number needed to be tracked.
+        YQ_Num: "{{ order.tracking }}"
+    });
+</script>
+
+{% endblock %}

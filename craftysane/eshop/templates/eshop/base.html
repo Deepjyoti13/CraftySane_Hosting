@@ -1,0 +1,152 @@
+{% load static %}
+{% load myapptags %}
+{% settingslist as setting %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- JQuery -->
+    <!-- jQuery !-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
+    </script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js">
+    </script>
+    <title> {% block title %}
+        {% endblock %} | Craftysane</title>
+        {% if setting.icon %}
+        <link rel="shortcut icon" href="{{ setting.icon.url }}" type="image/x-icon">
+        {% endif %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<style>
+    {% block style %}
+    
+    {% endblock %}
+
+    
+
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #peep {
+        display: none;
+    }
+
+    #peep2 {
+        display: block !important;
+    }
+
+    #catbox {
+        border-radius: 10px;
+    }
+
+    #listimg {
+        height: 500px;
+        object-fit: cover;
+        object-position: center;
+    }
+    #productpageimg{
+        height: 600px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    @media screen and (max-width: 992px) {
+        #listimg {
+            height: 240px;
+
+        }
+        #productpageimg{
+            height: 400px;
+            object-fit: cover;
+            object-position: center;
+        }
+        #peep {
+            display: block;
+        }
+
+        #peep2 {
+            display: none !important;
+        }
+    }
+
+    #hideMe {
+        position: fixed;
+        z-index: 10000;
+        background: rgb(252, 252, 252);
+        width: 100%;
+        height: 100vh;
+        -moz-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Firefox */
+        -webkit-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Safari and Chrome */
+        -o-animation: cssAnimation 1s ease-in 6s forwards;
+        /* Opera */
+        animation: cssAnimation 1s ease-in 6s forwards;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+
+    }
+
+    @keyframes cssAnimation {
+        to {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    @-webkit-keyframes cssAnimation {
+        to {
+            height: 0;
+            visibility: hidden;
+        }
+    }
+</style>
+<script>
+</script>
+
+<body>
+    <!-- Navbar -->
+    {% include 'eshop/navbar.html' %}
+    {% if page != 1 %}
+    <br>
+    {% endif %}
+    <!--/.Navbar -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% block body %}
+
+    {% endblock %}
+    {% include 'eshop/bottom.html' %}
+</body>
+
+</html>

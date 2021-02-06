@@ -1,0 +1,107 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+{{ catdata }}
+{% endblock %}
+
+{% block body %}
+{% load myapptags %}
+<br>
+<div class="container">
+	<h2><span class="small">Buckler</span> <strong>{{ catdata }}</strong></h2>
+
+	<div class="bg-dark w-50" style="height: 2px;"></div>
+	<br>
+	{% if catdata.is_leaf_node %}
+	<div class="row">
+		<!--Loop starts here-->
+		{% for i in products %}
+        <div class="col-6 mx-0 px-1">
+          <a href="{% url 'product_detail' i.id i.slug %}">
+            <div class="w-100 rounded">
+              <img
+                class="w-100 rounded"
+                id=""
+                src="{{ i.image.url }}"
+                alt=""
+              />
+              <div class="px-2 pt-2">
+                <div>
+                  <h6 class="my-0 py-0 text-success"><strong>{{ i.brand_name }}</strong></h6>
+                  <p class="w-100 text-dark small mb-0 pb-0">
+                    {{ i.title }}
+                  </p>
+                  <a class="disabled text-dark mt-0 pt-0 small" href=""
+                    >{{ i.avaregereview|stringformat:".2f"}} <span class="fa fa-star text-warning"></span> | {{ i.countreview }}
+                    reviews</a
+                  >
+				  <br />
+                  <a
+                    class="small disabled text-dark h4 mr-1 mt-0 pt-0"
+                    style="font-weight: 700; font-family: roboto"
+                    ><i class="fas fa-rupee-sign    "></i> {{ i.price }}</a
+                  >
+                  <a
+                    class="small disabled text-dark mt-0 pt-0"
+                    style="font-family: roboto"
+                    ><strike><i class="fas fa-rupee-sign    "></i> {{ i.prevprice }}</strike></a
+				  >
+                  <p class="text-danger p-0 m-0 small">{{ i.offer }}% off</p>
+				</div>
+				{% if i.variant != "None" %}
+				<a class="btn my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none"
+				href="{% url 'product_detail' i.id i.slug %}">
+                  View
+				</a>
+				{% else %}
+				<a class="btn my-2 w-md-100 text-light bg-dark p-1 px-3 mx-0 rounded" style="border: none"
+				href="{% url 'addtoshopcart' i.id %}">
+                  Cart
+				</a>
+				{% endif %}
+				<a href="{% url 'addtowishlist' i.id %}" class="my-2 btn-sm rounded-circle ml-1"
+				style="border: none;height: 32px !important;width: 32px;background: red;object-fit: cover;object-position: center;"><i
+					class="far fa-heart text-white"></i></a>				
+              </div>
+            </div>
+          </a>
+          <br />
+        </div>
+		{% endfor %}
+        <!--Loop ends here-->
+	</div>
+	{% endif %}
+	{% for item in subcat %}
+	{% with counter=0 %}
+	<div>
+		<h5 class="my-0" style="font-weight: 700;">{{ item.title }}</h3>
+	</div>
+	<div class="row">
+		{% for i in products %}
+		{% if i.category.id == item.id %}
+		{% if counter|increment:len < 4 %}
+		<div class="col-3 p-0 px-1 my-3">
+			<a href="{% url 'product_detail' i.id i.slug %}">
+				<img class="w-100" id="catbox" src="{{ i.image.url }}" alt="">
+			</a>
+		</div>
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+		<span style="display: none;">{% reset %}</span>
+		<div class="col-3 p-0 my-3   text-center"
+			style="border-radius: 10px;background: url(https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjV8fG1lbnxlbnwwfDJ8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);background-size: cover;">
+			<div class="h-100 w-100 m-0 p-0" style="background: rgba(0, 0, 0, 0.61);border-radius: 10px;">
+				<div style="position: relative;top: 50%;transform: translateY(-50%);">
+					<a href="{% url 'category_product' item.id item.slug %}" class="text-white " href="#"><strong>SEE
+							ALL</strong></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endwith %}
+	{% endfor %}
+
+	<br>
+</div>
+
+{% endblock %}

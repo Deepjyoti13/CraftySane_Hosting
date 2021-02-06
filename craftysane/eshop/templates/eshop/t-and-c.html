@@ -1,0 +1,10 @@
+{% extends 'eshop/base.html' %}
+{% block title %}
+T & C
+{% endblock %}
+{% block body %}
+<br>
+<div class="container p-2">
+    {{ setting.t_n_c|safe }}
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}
+Log In
+{% endblock %}
+{% block body %}
+<div class="container ">
+    <div class="col-md-6 mx-auto text-center" style="border-radius: 30px;border: solid 2px rgb(226, 226, 226);">
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-6 text-right">
+                <a href="{% url 'signup_form' %}" class=" btn-white w-75 text-dark px-3 py-2"
+                    style="border: solid 2px #01aa01; box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);border-radius: 50px;">Register</a>
+            </div>
+            <div class="col-6 text-left">
+                <a class=" w-75 text-white px-4 py-2"
+                    style="background: #01aa01; box-shadow:  0px 10px 10px rgba(0, 0, 0, 0.15);border-radius: 50px;">Login</a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="col-md-8 mx-auto">
+            <form action="" method="POST"> {% csrf_token %}
+            <input type="text" name="username" class="form-control rounded-pill" placeholder="Username" aria-label="Username"
+                aria-describedby="basic-addon1">
+            <br>
+            <input type="password" name="password" class="form-control rounded-pill" placeholder="Password" aria-label="Password"
+                aria-describedby="basic-addon1">
+            <br>
+            <button type="submit" class="btn px-5 py-2 bg-white"
+                style="border: solid 2px rgb(0, 132, 255);box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);border-radius: 40px;">login</button>
+            </form>
+            <br>
+            <!-- <br> -->
+            <!-- <p>Other options to login</p>
+            <div class="row">
+                <div class="col text-right">
+                    <a href="">
+
+                        <img class="w-25" src="./images/search.svg" alt="">
+                    </a>
+                </div>
+                <div class="col text-left">
+                    <a href="">
+
+                        <img class="w-25" src="./images/facebook.svg" alt="">
+                    </a>
+                </div>
+            </div> -->
+            Forgot Password? Click
+            <a href="{% url 'reset_password' %}">
+                <span class="small text-dark"><strong> here</strong></span>
+            </a>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+
+<br><br>
+{% endblock %}

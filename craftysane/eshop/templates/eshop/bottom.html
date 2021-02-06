@@ -1,0 +1,65 @@
+{% load myapptags %}
+{% categorylist as category %}
+{% settingslist as setting %}
+<br />
+{% if user.id is not None %}
+<div class="container text-center my-2">
+    <a class="bg-dark text-white px-5 py-2 rounded-pill" href="{% url 'logout_func' %}">Logout</a>
+</div>
+<br />
+{% endif %}
+<div class="container">
+    <div class="row mx-0 px-0">
+        <div class="col-md-4 mx-auto">
+            <div class="row mx-0 px-auto">
+                {% if setting.facebook %}
+                <div class="col-2 mx-auto text-center">
+                    <a href="{{ setting.facebook }}"><i class="fab fa-facebook fa-2x text-primary"></i></a>
+                </div>
+                {% endif %}
+                {% if setting.twitter %}
+                <div class="col-2 mx-auto text-center">
+                    <a href="{{ setting.twitter }}"><i class="fab fa-twitter fa-2x text-default"></i></a>
+                </div>
+                {% endif %}
+                {% if setting.instagram %}
+                <div class="col-2 mx-auto text-center">
+                    <a href="{{ setting.instagram }}"><i class="fab fa-instagram fa-2x text-secondary"></i></a>
+                </div>
+                {% endif %}
+                {% if setting.youtube %}
+                <div class="col-2 mx-auto text-center">
+                    <a href="{{ setting.youtube }}"><i class="fab fa-youtube fa-2x text-danger"></i></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="bg-dark p-3">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-md-9">
+                {% if setting.title %}
+                <h1 class="text-white"><strong>{{ setting.title }}</strong></h1>
+                {% endif %}
+                <br>
+            </div>
+            <div class="col-md-3 text-white">
+                <h4>Contact Us</h4>
+                <a class="text-white" href="{% url 'contact' %}"><p class="m-0 p-0">Write to us</p></a>
+                {% if setting.email %}
+                <p class="m-0 p-0">{{ setting.email }}</p>
+                {% endif %}
+                {% if setting.phone %}
+                <p class="m-0 p-0">{{ setting.phone }}</p>
+                {% endif %}
+                {% if setting.office_address %}
+                <p class="m-0 p-0">{{ setting.office_address }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

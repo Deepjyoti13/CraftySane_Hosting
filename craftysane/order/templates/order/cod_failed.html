@@ -1,0 +1,38 @@
+{% extends 'eshop/base.html' %}
+{% load static %}
+{% block body %}
+<!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="order-summary clearfix">
+                        <div class="section-title">
+                            <h3 class="title">Order Failed</h3>
+                        </div>
+                        <hr>
+                        <h2>Dear buyer, {{ request.user }},</h2>
+                        <hr>
+                        <h3>Your order failed</h3>
+                        <h3>Order Code : {{ ordercode }}</h3>
+                        <h3>Enter valid payment credentials or try ordering again!</h3>
+                        <h3>Strictly don't refresh this page.</h3>
+                        <h3>Thank You</h3>
+                        <hr>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
